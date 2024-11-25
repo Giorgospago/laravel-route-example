@@ -33,6 +33,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/users">Users</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts">Posts</a>
+                    </li>
                     
                 </ul>
                 <form class="d-flex" role="search">
