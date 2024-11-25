@@ -1,21 +1,10 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/about', function() {
-    return view('about');
-});
-
-Route::get('/contact', function() {
-    return view('contact');
-});
-
-Route::get('/user/{user_id}', function($user_id) {
-   return view('user', [
-    'user' => $user_id
-   ]);
-});
+Route::get('/', [AppController::class, 'home']);
+Route::get('/about', [AppController::class, 'about']);
+Route::get('/contact', [AppController::class, 'contact']);
+Route::get('/users', [AppController::class, 'listOfUsers']);
+Route::get('/user/{user_id}', [AppController::class, 'showUser']);
