@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AppController::class, 'home']);
@@ -17,3 +18,5 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::get('/posts/{id}/delete', [PostController::class, 'delete']);
 Route::get('/posts/{id}/edit', [PostController::class, 'editForm']);
 Route::put('/posts/{id}/update', [PostController::class, 'update']);
+
+Route::get('/search-results', [SearchController::class, 'searchResults']);
