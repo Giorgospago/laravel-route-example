@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -36,11 +37,14 @@ class PostController extends Controller
     }
 
     public function store(Request $request) {
+        $path = $request->file('image')->store('posts', 'public');
+        $imageUrl = url($path);
+
         Post::create([
             "title" => $request->title,
             "intro" => $request->intro,
             "description" => $request->description,
-            "image" => $request->image,
+            "image" => $imageUrl,
             "author" => $request->author
         ]);
 
@@ -63,8 +67,17 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->intro = $request->intro;
         $post->description = $request->description;
-        $post->image = $request->image;
         $post->author = $request->author;
+        
+
+        if ($request->hasFile('image')) {
+            $imagePath = parse_url($post->image, PHP_URL_PATH);
+            Storage::disk('public')->delete($imagePath);
+
+            $path = $request->file('image')->store('posts', 'public');
+            $post->image = url($path);
+        }
+
 
         $post->save();
 
@@ -73,12 +86,14 @@ class PostController extends Controller
 
 
     public function delete($id) {
-        // $post = Post::find($id);
-        // SELECT * FROM posts WHERE id = 1
-        // $post->delete();
-        // DELETE FROM posts WHERE id = 1
+        $post = Post::find($id);
 
-        Post::destroy($id);
+        $imagePath = parse_url($post->image, PHP_URL_PATH);
+        Storage::disk('public')->delete($imagePath);
+
+        $post->delete();
+
+        // Post::destroy($id);
         // DELETE FROM posts WHERE id = 1
 
         return redirect("/posts");
