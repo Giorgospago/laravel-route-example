@@ -11,4 +11,9 @@ Route::get('/users', [AppController::class, 'listOfUsers']);
 Route::get('/user/{user_id}', [AppController::class, 'showUser']);
 
 Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/create', [PostController::class, 'createForm']);
+Route::post('/posts/create', [PostController::class, 'store']);
 Route::get('/posts/{id}', [PostController::class, 'show']);
+Route::get('/posts/{id}/delete', [PostController::class, 'delete']);
+Route::get('/posts/{id}/edit', [PostController::class, 'editForm']);
+Route::put('/posts/{id}/update', [PostController::class, 'update']);
